@@ -8,7 +8,6 @@ import java.util.Random;
 
 public class Minesweeper extends JFrame implements MouseListener, ActionListener {
     private boolean game = true;
-    private Score highScorePanel;
     private int size;
     private int score;
     private int bombs;
@@ -148,15 +147,7 @@ public class Minesweeper extends JFrame implements MouseListener, ActionListener
                     game = false;
                     String[] options = {"Play Again!", "No Thanks :("};
                     JOptionPane.showMessageDialog(null, "You Lost :(", "", JOptionPane.INFORMATION_MESSAGE);
-
-                    if (highScorePanel == null)
-                    {
-                        highScorePanel = new Score(score,null);
-                    } else
-                    {
-                        highScorePanel.addScore(score,null);
-                    }
-
+                    new Score(score, this);
                     int x = JOptionPane.showOptionDialog(null,"Would You Like To Play Again?", "You Lost", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
                     if (x == 0){
                         newGame();
@@ -186,6 +177,7 @@ public class Minesweeper extends JFrame implements MouseListener, ActionListener
 
         if (bombs == closedCells){
             JOptionPane.showMessageDialog(null, "You Won!", "", JOptionPane.INFORMATION_MESSAGE);
+            new Score(score, this);
             String[] options = {"Play Again!", "No Thanks :("};
             int x = JOptionPane.showOptionDialog(null,"Would You Like To Play Again?", "You Won", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
             if (x == 0){
